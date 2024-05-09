@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+
+    https://jsfiddle.net/m1erickson/Cf5TX/
+
+    jquery -> vanilla js
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Cursor'u değiştirme</title>
+    <style>
+        body {
+            background-color: ivory;
+        }
+
+        #canvas {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width=300 height=300></canvas>
+
+    <script>
+
+        // https://stackoverflow.com/questions/6139720/pure-javascript-function-similar-to-jquery-offset
+        function getOffset(element) {
+            if (!element.getClientRects().length) {
+                return { top: 0, left: 0 };
+            }
+
+            let rect = element.getBoundingClientRect();
+            let win = element.ownerDocument.defaultView;
+            return (
+                {
+                    top: rect.top + win.pageYOffset,
+                    left: rect.left + win.pageXOffset
+                });
+        }
+
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const { top:offsetX, left:offsetY } = getOffset(canvas);
+        let mouseX = 0;
+        let mouseY = 0;
+
+        canvas.style.cursor = "none";
+
+        canvas.addEventListener('mousemove', handleMouseMove);
+
+        function handleMouseMove(e) {
+            ctx.clearRect(mouseX - 1, mouseY - 1, 9, 9);
+            mouseX = e.clientX - offsetX;
+            mouseY = e.clientY - offsetY;
+            ctx.fillRect(mouseX, mouseY, 8, 8);
+        }
+
+    </script>
+</body>
+
+</html>
