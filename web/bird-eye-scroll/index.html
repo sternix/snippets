@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="tr">
+
+<!-- 
+https://codepen.io/sharnajh/pen/ExjpGwr
+sitesindeki örnek uyarlandı
+
+fotoğraf https://unsplash.com/@trapnation sitesinden alıntıdır
+-->
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bird Eye Örneği</title>
+
+  <style>
+    :root {
+      --scale: 1.5 --y: 0;
+      overflow: hidden;
+
+      body {
+        margin: 0;
+        background-color: black;
+        outline: none;
+        border: none;
+      }
+
+      #wrapper {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      #image {
+        width: 100vw;
+        height: 100vh;
+        transform: translateX(var(--x)) translateY(var(--y)) scale(var(--scale));
+        transition: ease-out 0.7s;
+      }
+    }
+  </style>
+</head>
+
+<body>
+    <div id="wrapper">
+      <img id="image" alt="Tokio" src="time_square_bird_eye.jpeg" />
+    </div>
+</body>
+
+<script>
+  const el = document.getElementById("wrapper");
+
+  const handleMouseMove = (e) => {
+    const d = el.getBoundingClientRect();
+    let x = e.clientX - (d.left + Math.floor(d.width / 2));
+    let y = e.clientY - (d.top + Math.floor(d.height / 2));
+    // Invert values
+    x = x - x * 2;
+    y = y - y * 2;
+    document.documentElement.style.setProperty("--scale", 1.6);
+    document.documentElement.style.setProperty("--x", x / 2 + "px");
+
+    document.documentElement.style.setProperty("--y", y / 2 + "px");
+  };
+
+  const handleMouseLeave = () => {
+    document.documentElement.style.setProperty("--scale", 1);
+    document.documentElement.style.setProperty("--x", 0);
+    document.documentElement.style.setProperty("--y", 0);
+  };
+
+  el.addEventListener('mousemove', handleMouseMove);
+  el.addEventListener('mouseleave', handleMouseLeave);
+
+</script>
+
+</html>
