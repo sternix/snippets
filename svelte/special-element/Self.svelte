@@ -3,7 +3,7 @@
 Counter.svelte
 ```svelte
 <script>
-    let { count } = $props();
+    let { count = 0 } = $props();
 </script>
 
 {#if count > 0}
@@ -20,7 +20,7 @@ App.svelte
     import Counter from "./Counter.svelte";
 </script>
 
-<Counter count="5" />
+<Counter count={5} />
 ```
 
 Sonuç:
